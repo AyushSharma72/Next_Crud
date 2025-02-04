@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  background-color: black;
+  color: white;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.navbar {
+  background: linear-gradient(220.55deg, #3793ff 0%, #0017e4 100%);
+}
+
+.addbtn {
+  color: white;
+  background-color: blue;
+}
