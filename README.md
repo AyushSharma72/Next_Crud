@@ -10,14 +10,10 @@ Ensure you have the following installed on your system:
 ## Getting Started
 ### 1. Clone the Repository
 ```sh
-git clone <your-repo-url>
+git clone https://github.com/AyushSharma72/Next_Crud.git
 ```
-Replace `<your-repo-url>` with your actual Git repository URL.
 
 ### 2. Navigate to Project Directory
-```sh
-cd your-project-name
-```
 
 ### 3. Install Dependencies
 ```sh
@@ -31,6 +27,4 @@ npm run dev
 
 By default, the application will be running at `http://localhost:3000/`.
 
-## Conclusion
-You now have the Next.js app set up and running. Happy coding! 🚀
 
