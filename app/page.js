@@ -30,14 +30,16 @@ export default function Home() {
   const [newdescription, setNewDescription] = useState("");
   const [newDuedate, setNewDueDate] = useState("");
   const [newStatus, setNewStatus] = useState("");
-  const[newTime,setNewtime] = useState("")
+  const [newTime, setNewtime] = useState("");
   const [loadingbackdrop, Setloadingbackdrop] = useState(false);
   const [deleteid, SetDeleteId] = useState("");
+  const [editingTaskId, setEditingTaskId] = useState(null);
 
   async function OpenModal(id) {
     Setloadingbackdrop(true);
     const response = await getSingleTaskDataAction(id);
     if (response.success) {
+      setEditingTaskId(id);
       setNewTitle(response.task.title);
       setNewDescription(response.task.description);
       setNewDueDate(moment(response.task.dueDate).format("YYYY-MM-DD"));
@@ -70,8 +72,7 @@ export default function Home() {
     }
   }
 
-  async function deleteTask(id,e){
-  
+  async function deleteTask(id, e) {
     e.preventDefault();
     const response = await deleteTaskAction(id);
 
@@ -83,8 +84,7 @@ export default function Home() {
       SetDeleteModal(false);
       toast.error(response.message);
     }
-  
-}
+  }
 
   async function getTasksCount() {
     const response = await getTasksCountAction();
@@ -95,9 +95,14 @@ export default function Home() {
     }
   }
 
-  async function UpdateTask(id) {
+  async function UpdateTask() {
+    if (!editingTaskId) {
+      toast.error("No task selected for update.");
+      return;
+    }
+
     setLoading(true);
-    const response = await updateTaskAction(id, {
+    const response = await updateTaskAction(editingTaskId, {
       newtitle,
       newdescription,
       newdueDate: newDuedate,
@@ -115,8 +120,6 @@ export default function Home() {
       toast.error(response.message);
     }
   }
-
-
 
   useEffect(() => {
     fetchData();
@@ -254,7 +257,6 @@ export default function Home() {
                       value={newTime}
                       onChange={(e) => setNewtime(e.target.value)}
                       margin="normal"
-                      
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -271,12 +273,11 @@ export default function Home() {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={() => {
-                        UpdateTask(t._id);
-                      }}
+                      onClick={UpdateTask}
                     >
                       Update
                     </Button>
+
                     <Button
                       variant="contained"
                       color="primary"
